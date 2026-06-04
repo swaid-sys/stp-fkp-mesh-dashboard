@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STP FKP & Mesh Adoption Dashboard - Commercial - Herman Kwong Org</title>
+    <title>STP FKP & Mesh Adoption Dashboard - Multi-Environment - Herman Kwong Org</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -28,6 +28,41 @@
         .header h1 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
         .header .subtitle { color: #666; font-size: 1.2em; margin-bottom: 5px; }
         .header .timestamp { color: #999; font-size: 0.9em; }
+
+        /* Environment tabs */
+        .env-tabs {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .env-tab-buttons {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 4px solid #667eea;
+        }
+        
+        .env-tab-button {
+            flex: 1;
+            padding: 25px 20px;
+            background: none;
+            border: none;
+            font-size: 1.3em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .env-tab-button:hover { background: rgba(102, 126, 234, 0.1); color: #667eea; }
+        .env-tab-button.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        
+        .env-content { display: none; }
+        .env-content.active { display: block; }
 
         .org-metrics {
             background: white;
@@ -159,6 +194,7 @@
         @media (max-width: 768px) {
             .header h1 { font-size: 1.8em; }
             .tab-button { font-size: 0.85em; padding: 15px 8px; min-width: 150px; }
+            .env-tab-button { font-size: 1em; padding: 20px 10px; }
             table { font-size: 0.9em; }
             th, td { padding: 10px; }
         }
@@ -168,64 +204,75 @@
     <div class="container">
         <div class="header">
             <h1>📊 STP FKP & Mesh Adoption Dashboard</h1>
-            <div class="subtitle">Herman Kwong's Organization - Commercial Metrics</div>
-            <div class="timestamp">Generated: June 4, 2026 at 3:00 PM</div>
+            <div class="subtitle">Herman Kwong's Organization - Multi-Environment</div>
+            <div class="timestamp">Generated: June 4, 2026</div>
+        </div>
+        
+        <!-- Environment Level Tabs -->
+        <div class="env-tabs">
+            <div class="env-tab-buttons">
+                <button class="env-tab-button active" onclick="switchEnv(event, 'commercial')">🏢 Commercial</button>
+                <button class="env-tab-button" onclick="switchEnv(event, 'gia2h')">🔐 Gia2h</button>
+            </div>
         </div>
 
-        <div class="org-metrics">
-            <h2>👥 Organization Metrics by STP Leader</h2>
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="label">Total Services</div>
-                    <div class="value">301</div>
+        
+        <!-- Commercial Environment Content -->
+        <div id="commercial-env" class="env-contentactive">
+            <div class="org-metrics">
+                <h2>👥 Organization Metrics by STP Leader - Commercial</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="label">Total Services</div>
+                        <div class="value">301</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">FKP Adopted</div>
+                        <div class="value">164</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Mesh Adopted</div>
+                        <div class="value">169</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Path to Deprecation</div>
+                        <div class="value">71</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Can Not / Should Not Containerize</div>
+                        <div class="value">50</div>
+                    </div>
                 </div>
-                <div class="metric-card">
-                    <div class="label">FKP Adopted</div>
-                    <div class="value">164</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Mesh Adopted</div>
-                    <div class="value">169</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Path to Deprecation</div>
-                    <div class="value">71</div>
-                </div>
-                <div class="metric-card">
-                    <div class="label">Can Not / Should Not Containerize</div>
-                    <div class="value">36</div>
-                </div>
-            </div>
 
-            <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 20px;">
-                <div class="metric-card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                    <div class="label">% Services FKP Adopted</div>
-                    <div class="value">84.5%</div>
-                    <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">164 of 194 eligible services</div>
+                <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 20px;">
+                    <div class="metric-card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                        <div class="label">% Services FKP Adopted</div>
+                        <div class="value">91.1%</div>
+                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">164 of 180 eligible services</div>
+                    </div>
+                    <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="label">% Services Mesh Adopted</div>
+                        <div class="value">93.9%</div>
+                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">169 of 180 eligible services</div>
+                    </div>
                 </div>
-                <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <div class="label">% Services Mesh Adopted</div>
-                    <div class="value">87.1%</div>
-                    <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">169 of 194 eligible services</div>
-                </div>
-            </div>
 
-            <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">🟢 FKP Adoption Status by STP Leader</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>STP Leader</th>
-                        <th>Total</th>
-                        <th>✅ Completed</th>
-                        <th>⚠️ Clean-up</th>
-                        <th>🔄 In Progress</th>
-                        <th>❌ Not Started</th>
-                        <th>🚫 Blocked</th>
-                        <th>📅 Deprecation</th>
-                        <th>⚪ Can't Container.</th>
-                    </tr>
-                </thead>
-                <tbody>
+                <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">🟢 FKP Adoption Status by STP Leader</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STP Leader</th>
+                            <th>Total</th>
+                            <th>✅ Completed</th>
+                            <th>⚠️ Clean-up</th>
+                            <th>🔄 In Progress</th>
+                            <th>❌ Not Started</th>
+                            <th>🚫 Blocked</th>
+                            <th>📅 Deprecation</th>
+                            <th>⚪ Can't Container.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <tr>
                         <td><strong>Ajith Jayamohan</strong></td>
                         <td>78</td>
@@ -303,25 +350,25 @@
                         <td>0</td>
                         <td>4</td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
-            <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">🔵 Mesh Adoption Status by STP Leader</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>STP Leader</th>
-                        <th>Total</th>
-                        <th>✅ Completed</th>
-                        <th>⚠️ Clean-up</th>
-                        <th>🔄 In Progress</th>
-                        <th>❌ Not Started</th>
-                        <th>🚫 Blocked</th>
-                        <th>📅 Deprecation</th>
-                        <th>⚪ Can't Container.</th>
-                    </tr>
-                </thead>
-                <tbody>
+                <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">🔵 Mesh Adoption Status by STP Leader</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STP Leader</th>
+                            <th>Total</th>
+                            <th>✅ Completed</th>
+                            <th>⚠️ Clean-up</th>
+                            <th>🔄 In Progress</th>
+                            <th>❌ Not Started</th>
+                            <th>🚫 Blocked</th>
+                            <th>📅 Deprecation</th>
+                            <th>⚪ Can't Container.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <tr>
                         <td><strong>Ajith Jayamohan</strong></td>
                         <td>78</td>
@@ -399,34 +446,34 @@
                         <td>0</td>
                         <td>4</td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="tabs">
-            <div class="tab-buttons">
-                <button class="tab-button active" onclick="switchTab(event, 'fkp')">🟢 FKP Adoption Status</button>
-                <button class="tab-button" onclick="switchTab(event, 'mesh')">🔵 Mesh Adoption Status</button>
-                <button class="tab-button" onclick="switchTab(event, 'cant')">⚪ Can Not / Should Not Containerize</button>
-                <button class="tab-button" onclick="switchTab(event, 'path')">📅 Path to Deprecation</button>
+                    </tbody>
+                </table>
             </div>
 
-            <!-- FKP Adoption Status Tab -->
-            <div id="fkp-tab" class="tab-content active">
-                <h3 style="color: #667eea; margin-bottom: 15px;">FKP Adoption Status (194 services)</h3>
-                <p style="color: #666; margin-bottom: 20px;">
-                    Services actively tracked for FKP adoption (excludes Path to Deprecation and Can Not/Should Not Containerize).
-                </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>STP Leader</th>
-                            <th>Service Name</th>
-                            <th>Eng360 Status</th>
-                            <th>FKP Commercial Adoption Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="tabs">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="switchTab(event, 'commercial-fkp')">🟢 FKP Adoption Status</button>
+                    <button class="tab-button" onclick="switchTab(event, 'commercial-mesh')">🔵 Mesh Adoption Status</button>
+                    <button class="tab-button" onclick="switchTab(event, 'commercial-cant')">⚪ Can Not / Should Not Containerize</button>
+                    <button class="tab-button" onclick="switchTab(event, 'commercial-path')">📅 Path to Deprecation</button>
+                </div>
+
+                <!-- FKP Adoption Status Tab -->
+                <div id="commercial-fkp-tab" class="tab-content active">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">FKP Adoption Status (180 services)</h3>
+                    <p style="color: #666; margin-bottom: 20px;">
+                        Services actively tracked for FKP adoption (excludes Path to Deprecation and Can Not/Should Not Containerize).
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>STP Leader</th>
+                                <th>Service Name</th>
+                                <th>Eng360 Status</th>
+                                <th>FKP Commercial Adoption Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <td>Ajith Jayamohan</td>
                                 <td><strong>api-fetcher</strong></td>
@@ -639,12 +686,6 @@
                             </tr>
                             <tr>
                                 <td>Fiaz Hossain</td>
-                                <td><strong>data-resilience</strong></td>
-                                <td>100% (23 / 23)</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
                                 <td><strong>data-resilience-restore</strong></td>
                                 <td>100% (1 / 1)</td>
                                 <td><span class="badge success">Completed</span></td>
@@ -714,12 +755,6 @@
                                 <td><strong>eaas</strong></td>
                                 <td>100% (28 / 28)</td>
                                 <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
-                                <td><strong>edge</strong></td>
-                                <td>0% (0 / 30)</td>
-                                <td><span class="badge info">In Progress: Dev</span></td>
                             </tr>
                             <tr>
                                 <td>Satish Raghunath</td>
@@ -797,12 +832,6 @@
                                 <td>Claudia Santoro</td>
                                 <td><strong>idm-engine</strong></td>
                                 <td>100% (2 / 2)</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Claudia Santoro</td>
-                                <td><strong>idm-store</strong></td>
-                                <td>No data</td>
                                 <td><span class="badge success">Completed</span></td>
                             </tr>
                             <tr>
@@ -884,12 +913,6 @@
                                 <td><span class="badge success">Completed</span></td>
                             </tr>
                             <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>kmsinfra</strong></td>
-                                <td>No data</td>
-                                <td><span class="badge warning">Completed with Clean-Up Required</span></td>
-                            </tr>
-                            <tr>
                                 <td>Wolfgang Krause</td>
                                 <td><strong>kodama</strong></td>
                                 <td>100% (2 / 2)</td>
@@ -947,18 +970,6 @@
                                 <td>Wolfgang Krause</td>
                                 <td><strong>lpt</strong></td>
                                 <td>100% (2 / 2)</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>madkub-injection-webhook</strong></td>
-                                <td>No data</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>madkub-watchdog</strong></td>
-                                <td>No data</td>
                                 <td><span class="badge success">Completed</span></td>
                             </tr>
                             <tr>
@@ -1089,12 +1100,6 @@
                             </tr>
                             <tr>
                                 <td>Claudia Santoro</td>
-                                <td><strong>pcsk-secds-sync-job</strong></td>
-                                <td>No data</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Claudia Santoro</td>
                                 <td><strong>pcskam</strong></td>
                                 <td>100% (3 / 3)</td>
                                 <td><span class="badge success">Completed</span></td>
@@ -1121,12 +1126,6 @@
                                 <td>Satish Raghunath</td>
                                 <td><strong>pl-api-dev</strong></td>
                                 <td>100% (3 / 3)</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
-                                <td><strong>policy-releaser</strong></td>
-                                <td>No data</td>
                                 <td><span class="badge success">Completed</span></td>
                             </tr>
                             <tr>
@@ -1187,12 +1186,6 @@
                                 <td>Fiaz Hossain</td>
                                 <td><strong>quark</strong></td>
                                 <td>100% (1 / 1)</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Wolfgang Krause</td>
-                                <td><strong>rabbitmq-external-sfmp</strong></td>
-                                <td>No data</td>
                                 <td><span class="badge success">Completed</span></td>
                             </tr>
                             <tr>
@@ -1317,12 +1310,6 @@
                             </tr>
                             <tr>
                                 <td>Fiaz Hossain</td>
-                                <td><strong>smscps</strong></td>
-                                <td>No data</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
                                 <td><strong>smszk</strong></td>
                                 <td>100% (28 / 28)</td>
                                 <td><span class="badge success">Completed</span></td>
@@ -1373,12 +1360,6 @@
                                 <td>Satish Raghunath</td>
                                 <td><strong>tesoro</strong></td>
                                 <td>100% (2 / 2)</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Claudia Santoro</td>
-                                <td><strong>test-iam-prod-onboarding</strong></td>
-                                <td>No data</td>
                                 <td><span class="badge success">Completed</span></td>
                             </tr>
                             <tr>
@@ -1520,18 +1501,6 @@
                                 <td><span class="badge warning">Completed with Clean-Up Required</span></td>
                             </tr>
                             <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>vaultwebhook</strong></td>
-                                <td>No data</td>
-                                <td><span class="badge warning">Completed with Clean-Up Required</span></td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
-                                <td><strong>waas-control-plane</strong></td>
-                                <td>No data</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
                                 <td>Satish Raghunath</td>
                                 <td><strong>waas-controller</strong></td>
                                 <td>100% (46 / 46)</td>
@@ -1581,35 +1550,30 @@
                             </tr>
                             <tr>
                                 <td>Satish Raghunath</td>
-                                <td><strong>waas-validation-controller</strong></td>
-                                <td>100% (46 / 46)</td>
-                                <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
                                 <td><strong>zetasvc</strong></td>
                                 <td>100% (2 / 2)</td>
                                 <td><span class="badge success">Completed</span></td>
-                            </tr></tbody>
-                </table>
-            </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <!-- Mesh Adoption Status Tab -->
-            <div id="mesh-tab" class="tab-content">
-                <h3 style="color: #667eea; margin-bottom: 15px;">Mesh Adoption Status (194 services)</h3>
-                <p style="color: #666; margin-bottom: 20px;">
-                    Services actively tracked for Mesh adoption (excludes Path to Deprecation and Can Not/Should Not Containerize).
-                </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>STP Leader</th>
-                            <th>Service Name</th>
-                            <th>Eng360 Status</th>
-                            <th>Mesh Commercial Adoption Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <!-- Mesh Adoption Status Tab -->
+                <div id="commercial-mesh-tab" class="tab-content">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Mesh Adoption Status (180 services)</h3>
+                    <p style="color: #666; margin-bottom: 20px;">
+                        Services actively tracked for Mesh adoption (excludes Path to Deprecation and Can Not/Should Not Containerize).
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>STP Leader</th>
+                                <th>Service Name</th>
+                                <th>Eng360 Status</th>
+                                <th>Mesh Commercial Adoption Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <td>Ajith Jayamohan</td>
                                 <td><strong>api-fetcher</strong></td>
@@ -1822,12 +1786,6 @@
                             </tr>
                             <tr>
                                 <td>Fiaz Hossain</td>
-                                <td><strong>data-resilience</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Managed Service</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
                                 <td><strong>data-resilience-restore</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
@@ -1897,12 +1855,6 @@
                                 <td><strong>eaas</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
-                                <td><strong>edge</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Full Routing Ownership Needed</span></td>
                             </tr>
                             <tr>
                                 <td>Satish Raghunath</td>
@@ -1983,12 +1935,6 @@
                                 <td><span class="badge success">Completed</span></td>
                             </tr>
                             <tr>
-                                <td>Claudia Santoro</td>
-                                <td><strong>idm-store</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Infra Only Service</span></td>
-                            </tr>
-                            <tr>
                                 <td>Satish Raghunath</td>
                                 <td><strong>inbound-mta</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
@@ -2067,12 +2013,6 @@
                                 <td><span class="badge success">Completed</span></td>
                             </tr>
                             <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>kmsinfra</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Not a Real Service</span></td>
-                            </tr>
-                            <tr>
                                 <td>Wolfgang Krause</td>
                                 <td><strong>kodama</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
@@ -2131,18 +2071,6 @@
                                 <td><strong>lpt</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>madkub-injection-webhook</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Mutating Webhook to Bring Up Service</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>madkub-watchdog</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Integration</span></td>
                             </tr>
                             <tr>
                                 <td>Satish Raghunath</td>
@@ -2272,12 +2200,6 @@
                             </tr>
                             <tr>
                                 <td>Claudia Santoro</td>
-                                <td><strong>pcsk-secds-sync-job</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Does Not Serve Traffic</span></td>
-                            </tr>
-                            <tr>
-                                <td>Claudia Santoro</td>
                                 <td><strong>pcskam</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
@@ -2305,12 +2227,6 @@
                                 <td><strong>pl-api-dev</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
-                                <td><strong>policy-releaser</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Not a Real Service</span></td>
                             </tr>
                             <tr>
                                 <td>Claudia Santoro</td>
@@ -2371,12 +2287,6 @@
                                 <td><strong>quark</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Wolfgang Krause</td>
-                                <td><strong>rabbitmq-external-sfmp</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Not a Real Service</span></td>
                             </tr>
                             <tr>
                                 <td>Ajith Jayamohan</td>
@@ -2500,12 +2410,6 @@
                             </tr>
                             <tr>
                                 <td>Fiaz Hossain</td>
-                                <td><strong>smscps</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: 1P Service</span></td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
                                 <td><strong>smszk</strong></td>
                                 <td><span class="badge secondary">N/A</span></td>
                                 <td><span class="badge success">Completed</span></td>
@@ -2557,12 +2461,6 @@
                                 <td><strong>tesoro</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>Claudia Santoro</td>
-                                <td><strong>test-iam-prod-onboarding</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Team Does Not Find Value</span></td>
                             </tr>
                             <tr>
                                 <td>Ajith Jayamohan</td>
@@ -2703,18 +2601,6 @@
                                 <td><span class="badge success">Completed</span></td>
                             </tr>
                             <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>vaultwebhook</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Mutating Webhook to Bring Up Service</span></td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
-                                <td><strong>waas-control-plane</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Not a Real Service</span></td>
-                            </tr>
-                            <tr>
                                 <td>Satish Raghunath</td>
                                 <td><strong>waas-controller</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
@@ -2764,35 +2650,30 @@
                             </tr>
                             <tr>
                                 <td>Satish Raghunath</td>
-                                <td><strong>waas-validation-controller</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge secondary">Will Not Move to Mesh: Mutating Webhook to Bring Up Service</span></td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
                                 <td><strong>zetasvc</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                            </tr></tbody>
-                </table>
-            </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <!-- Can Not / Should Not Containerize Tab -->
-            <div id="cant-tab" class="tab-content">
-                <h3 style="color: #856404; margin-bottom: 15px;">⚪ Services That Can Not / Should Not Containerize (36 services)</h3>
-                <p class="info-box">
-                    These services are not suitable for containerization due to technical limitations,
-                    business reasons, or architectural constraints.
-                </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Service Name</th>
-                            <th>STP Leader</th>
-                            <th>Reason</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <!-- Can Not / Should Not Containerize Tab -->
+                <div id="commercial-cant-tab" class="tab-content">
+                    <h3 style="color: #856404; margin-bottom: 15px;">⚪ Services That Can Not / Should Not Containerize (50 services)</h3>
+                    <p class="info-box">
+                        These services are not suitable for containerization due to technical limitations,
+                        business reasons, or architectural constraints.
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Service Name</th>
+                                <th>STP Leader</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <td><strong>afiniti</strong></td>
                                 <td>Claudia Santoro</td>
@@ -2844,6 +2725,11 @@
                                 <td>No Business Reason</td>
                             </tr>
                             <tr>
+                                <td><strong>data-resilience</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
                                 <td><strong>dnr-airflow</strong></td>
                                 <td>Ajith Jayamohan</td>
                                 <td>Technical Limitations</td>
@@ -2859,9 +2745,19 @@
                                 <td>Demo/Test Service (Low value to containerize)</td>
                             </tr>
                             <tr>
+                                <td><strong>edge</strong></td>
+                                <td>Satish Raghunath</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
                                 <td><strong>havc</strong></td>
                                 <td>Fiaz Hossain</td>
                                 <td>No Business Reason</td>
+                            </tr>
+                            <tr>
+                                <td><strong>idm-store</strong></td>
+                                <td>Claudia Santoro</td>
+                                <td>No reason specified</td>
                             </tr>
                             <tr>
                                 <td><strong>ipreputation</strong></td>
@@ -2889,6 +2785,21 @@
                                 <td>AWS Resource for Another Service</td>
                             </tr>
                             <tr>
+                                <td><strong>kmsinfra</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
+                                <td><strong>madkub-injection-webhook</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
+                                <td><strong>madkub-watchdog</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
                                 <td><strong>matlockauthval</strong></td>
                                 <td>Claudia Santoro</td>
                                 <td>Only running in 1P</td>
@@ -2909,9 +2820,19 @@
                                 <td>FKP Integration (Deployment / Stateful Set)</td>
                             </tr>
                             <tr>
+                                <td><strong>pcsk-secds-sync-job</strong></td>
+                                <td>Claudia Santoro</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
                                 <td><strong>perimetercdn-persistence</strong></td>
                                 <td>Satish Raghunath</td>
                                 <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>policy-releaser</strong></td>
+                                <td>Satish Raghunath</td>
+                                <td>No reason specified</td>
                             </tr>
                             <tr>
                                 <td><strong>portuno</strong></td>
@@ -2949,6 +2870,11 @@
                                 <td>Technical limitations</td>
                             </tr>
                             <tr>
+                                <td><strong>rabbitmq-external-sfmp</strong></td>
+                                <td>Wolfgang Krause</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
                                 <td><strong>raven</strong></td>
                                 <td>Garren Bellew</td>
                                 <td>Technical limitations</td>
@@ -2957,6 +2883,11 @@
                                 <td><strong>sitebridge</strong></td>
                                 <td>Satish Raghunath</td>
                                 <td>Technical limitations</td>
+                            </tr>
+                            <tr>
+                                <td><strong>smscps</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td>No reason specified</td>
                             </tr>
                             <tr>
                                 <td><strong>smsekm-skb</strong></td>
@@ -2969,30 +2900,51 @@
                                 <td>TF script. Already running in containers. Executed by Spinnaker pipeline.</td>
                             </tr>
                             <tr>
+                                <td><strong>test-iam-prod-onboarding</strong></td>
+                                <td>Claudia Santoro</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
                                 <td><strong>tip-usdl-janus-infra</strong></td>
                                 <td>Ajith Jayamohan</td>
                                 <td>AWS Resource for Another Service</td>
-                            </tr></tbody>
-                </table>
-            </div>
+                            </tr>
+                            <tr>
+                                <td><strong>vaultwebhook</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
+                                <td><strong>waas-control-plane</strong></td>
+                                <td>Satish Raghunath</td>
+                                <td>No reason specified</td>
+                            </tr>
+                            <tr>
+                                <td><strong>waas-validation-controller</strong></td>
+                                <td>Satish Raghunath</td>
+                                <td>No reason specified</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <!-- Path to Deprecation Tab -->
-            <div id="path-tab" class="tab-content">
-                <h3 style="color: #667eea; margin-bottom: 15px;">📅 Path to Deprecation (71 services)</h3>
-                <p class="info-box">
-                    These services are scheduled for deprecation. For more detailed timeline information and tracking,
-                    see the <a href="https://swaid-sys.github.io/stp-deprecation-dashboard/path_to_deprecation_dashboard.html"
-                    target="_blank">Path to Deprecation Dashboard</a>.
-                </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Service Name</th>
-                            <th>STP Leader</th>
-                            <th>Mesh Commercial Adoption Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <!-- Path to Deprecation Tab -->
+                <div id="commercial-path-tab" class="tab-content">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">📅 Path to Deprecation (71 services)</h3>
+                    <p class="info-box">
+                        These services are scheduled for deprecation. For more detailed timeline information and tracking,
+                        see the <a href="https://swaid-sys.github.io/stp-deprecation-dashboard/path_to_deprecation_dashboard.html"
+                        target="_blank">Path to Deprecation Dashboard</a>.
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Service Name</th>
+                                <th>STP Leader</th>
+                                <th>Mesh Commercial Adoption Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <td><strong>astcenter</strong></td>
                                 <td>Ajith Jayamohan</td>
@@ -3347,16 +3299,930 @@
                                 <td><strong>web-violation-report</strong></td>
                                 <td>Wolfgang Krause</td>
                                 <td><span class="badge secondary">Path to Deprecation</span></td>
-                            </tr></tbody>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gia2h Environment Content -->
+        <div id="gia2h-env" class="env-content">
+            <div class="org-metrics">
+                <h2>👥 Organization Metrics by STP Leader - Gia2h</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="label">Total Services</div>
+                        <div class="value">56</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">FKP Adopted</div>
+                        <div class="value">37</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Mesh Adopted</div>
+                        <div class="value">40</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Path to Deprecation</div>
+                        <div class="value">8</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Can Not / Should Not Containerize</div>
+                        <div class="value">1</div>
+                    </div>
+                </div>
+
+                <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 20px;">
+                    <div class="metric-card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                        <div class="label">% Services FKP Adopted</div>
+                        <div class="value">78.7%</div>
+                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">37 of 47 eligible services</div>
+                    </div>
+                    <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="label">% Services Mesh Adopted</div>
+                        <div class="value">85.1%</div>
+                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">40 of 47 eligible services</div>
+                    </div>
+                </div>
+
+                <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">🟢 FKP Adoption Status by STP Leader</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STP Leader</th>
+                            <th>Total</th>
+                            <th>✅ Completed</th>
+                            <th>⚠️ Clean-up</th>
+                            <th>🔄 In Progress</th>
+                            <th>❌ Not Started</th>
+                            <th>🚫 Blocked</th>
+                            <th>📅 Deprecation</th>
+                            <th>⚪ Can't Container.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Satish Raghunath</strong></td>
+                        <td>18</td>
+                        <td>16</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fiaz Hossain</strong></td>
+                        <td>18</td>
+                        <td>13</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>4</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claudia Santoro</strong></td>
+                        <td>10</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ajith Jayamohan</strong></td>
+                        <td>6</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ramya Subramani</strong></td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wolfgang Krause</strong></td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    </tbody>
                 </table>
+
+                <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">🔵 Mesh Adoption Status by STP Leader</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STP Leader</th>
+                            <th>Total</th>
+                            <th>✅ Completed</th>
+                            <th>⚠️ Clean-up</th>
+                            <th>🔄 In Progress</th>
+                            <th>❌ Not Started</th>
+                            <th>🚫 Blocked</th>
+                            <th>📅 Deprecation</th>
+                            <th>⚪ Can't Container.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>Satish Raghunath</strong></td>
+                        <td>18</td>
+                        <td>15</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fiaz Hossain</strong></td>
+                        <td>18</td>
+                        <td>12</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>4</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claudia Santoro</strong></td>
+                        <td>10</td>
+                        <td>6</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ajith Jayamohan</strong></td>
+                        <td>6</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ramya Subramani</strong></td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wolfgang Krause</strong></td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tabs">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="switchTab(event, 'gia2h-fkp')">🟢 FKP Adoption Status</button>
+                    <button class="tab-button" onclick="switchTab(event, 'gia2h-mesh')">🔵 Mesh Adoption Status</button>
+                    <button class="tab-button" onclick="switchTab(event, 'gia2h-cant')">⚪ Can Not / Should Not Containerize</button>
+                    <button class="tab-button" onclick="switchTab(event, 'gia2h-path')">📅 Path to Deprecation</button>
+                </div>
+
+                <!-- FKP Adoption Status Tab -->
+                <div id="gia2h-fkp-tab" class="tab-content active">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">FKP Adoption Status (47 services)</h3>
+                    <p style="color: #666; margin-bottom: 20px;">
+                        Services actively tracked for FKP adoption (excludes Path to Deprecation and Can Not/Should Not Containerize).
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>STP Leader</th>
+                                <th>Service Name</th>
+                                <th>Eng360 Status</th>
+                                <th>FKP Gia2h Adoption Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ajith Jayamohan</td>
+                                <td><strong>dnr-partitioner</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ajith Jayamohan</td>
+                                <td><strong>dnr-search-troll</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ajith Jayamohan</td>
+                                <td><strong>dnrdp-orion</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>edge</strong></td>
+                                <td>0% (0 / 1)</td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>jit</strong></td>
+                                <td>0% (0 / 2)</td>
+                                <td><span class="badge info">In Progress: Dev</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>kerberos-auth</strong></td>
+                                <td>0% (0 / 2)</td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>lime</strong></td>
+                                <td>50% (2 / 4)</td>
+                                <td><span class="badge info">In Progress: Pre-Prod</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>matlockauthrad</strong></td>
+                                <td>0% (0 / 2)</td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>matlockauthsync</strong></td>
+                                <td>0% (0 / 2)</td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>pradsm</strong></td>
+                                <td>0% (0 / 2)</td>
+                                <td><span class="badge info">In Progress: Pre-Prod</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>praui</strong></td>
+                                <td>0% (0 / 2)</td>
+                                <td><span class="badge info">In Progress: Pre-Prod</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>quantumk</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>secportal</strong></td>
+                                <td>0% (0 / 2)</td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>bharosa</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>kmsdb-backup-validation</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>pkicanary</strong></td>
+                                <td>0% (0 / 2)</td>
+                                <td><span class="badge info">In Progress: Pre-Prod</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>raphty</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>smsapi</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>smscanary</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>ura</strong></td>
+                                <td>100% (1 / 1)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-accelerator</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-canary</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-config</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-path-manager</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-path-scanner</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-policy-manager</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ramya Subramani</td>
+                                <td><strong>c2c-hf</strong></td>
+                                <td>100% (1 / 1)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ramya Subramani</td>
+                                <td><strong>cafe</strong></td>
+                                <td>100% (1 / 1)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>eaas</strong></td>
+                                <td>100% (4 / 4)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>inbound-mta</strong></td>
+                                <td>100% (4 / 4)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>ipam</strong></td>
+                                <td>100% (1 / 1)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>pl-api-dev</strong></td>
+                                <td>100% (1 / 1)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>private-linker-agent</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>privateconnect-outbound-dp</strong></td>
+                                <td>0% (0 / 2)</td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Wolfgang Krause</td>
+                                <td><strong>onyx-agent</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Wolfgang Krause</td>
+                                <td><strong>onyx-engine</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>kwaf-driver</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>l7waf-reporter</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>perimetercdn</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-controller</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-elasticsearch</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-events-fetcher</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-logstash</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-profiles-crud</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-rate-limiter</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-redis</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-validation-controller</strong></td>
+                                <td>100% (2 / 2)</td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mesh Adoption Status Tab -->
+                <div id="gia2h-mesh-tab" class="tab-content">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Mesh Adoption Status (47 services)</h3>
+                    <p style="color: #666; margin-bottom: 20px;">
+                        Services actively tracked for Mesh adoption (excludes Path to Deprecation and Can Not/Should Not Containerize).
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>STP Leader</th>
+                                <th>Service Name</th>
+                                <th>Eng360 Status</th>
+                                <th>Mesh Gia2h Adoption Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ajith Jayamohan</td>
+                                <td><strong>dnr-partitioner</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ajith Jayamohan</td>
+                                <td><strong>dnr-search-troll</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ajith Jayamohan</td>
+                                <td><strong>dnrdp-orion</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>edge</strong></td>
+                                <td><span class="badge secondary">N/A</span></td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>jit</strong></td>
+                                <td><span class="badge secondary">N/A</span></td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>kerberos-auth</strong></td>
+                                <td><span class="badge secondary">N/A</span></td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>lime</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>matlockauthrad</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>matlockauthsync</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>pradsm</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>praui</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>quantumk</strong></td>
+                                <td><span class="badge secondary">N/A</span></td>
+                                <td><span class="badge info">In Progress: Pre-Prod</span></td>
+                            </tr>
+                            <tr>
+                                <td>Claudia Santoro</td>
+                                <td><strong>secportal</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>bharosa</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>kmsdb-backup-validation</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>pkicanary</strong></td>
+                                <td><span class="badge secondary">N/A</span></td>
+                                <td><span class="badge info">In Progress: Pre-Prod</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>raphty</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>smsapi</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>smscanary</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>ura</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-accelerator</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-canary</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-config</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-path-manager</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-path-scanner</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Fiaz Hossain</td>
+                                <td><strong>vault-policy-manager</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ramya Subramani</td>
+                                <td><strong>c2c-hf</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ramya Subramani</td>
+                                <td><strong>cafe</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>eaas</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>inbound-mta</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>ipam</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>pl-api-dev</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>private-linker-agent</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>privateconnect-outbound-dp</strong></td>
+                                <td><span class="badge secondary">N/A</span></td>
+                                <td><span class="badge danger">Not Started</span></td>
+                            </tr>
+                            <tr>
+                                <td>Wolfgang Krause</td>
+                                <td><strong>onyx-agent</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Wolfgang Krause</td>
+                                <td><strong>onyx-engine</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>kwaf-driver</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>l7waf-reporter</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>perimetercdn</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-controller</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-elasticsearch</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-events-fetcher</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-logstash</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-profiles-crud</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-rate-limiter</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-redis</strong></td>
+                                <td><span class="badge success">TRUE</span></td>
+                                <td><span class="badge success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Satish Raghunath</td>
+                                <td><strong>waas-validation-controller</strong></td>
+                                <td><span class="badge secondary">N/A</span></td>
+                                <td><span class="badge info">Under Discussion</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Can Not / Should Not Containerize Tab -->
+                <div id="gia2h-cant-tab" class="tab-content">
+                    <h3 style="color: #856404; margin-bottom: 15px;">⚪ Services That Can Not / Should Not Containerize (1 services)</h3>
+                    <p class="info-box">
+                        These services are not suitable for containerization due to technical limitations,
+                        business reasons, or architectural constraints.
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Service Name</th>
+                                <th>STP Leader</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>smszk</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td>No reason specified</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Path to Deprecation Tab -->
+                <div id="gia2h-path-tab" class="tab-content">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">📅 Path to Deprecation (8 services)</h3>
+                    <p class="info-box">
+                        These services are scheduled for deprecation. For more detailed timeline information and tracking,
+                        see the <a href="https://swaid-sys.github.io/stp-deprecation-dashboard/path_to_deprecation_dashboard.html"
+                        target="_blank">Path to Deprecation Dashboard</a>.
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Service Name</th>
+                                <th>STP Leader</th>
+                                <th>Mesh Gia2h Adoption Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>dnr-connector</strong></td>
+                                <td>Ajith Jayamohan</td>
+                                <td><span class="badge secondary">Path to Deprecation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>dnr-fsnormalizer</strong></td>
+                                <td>Ajith Jayamohan</td>
+                                <td><span class="badge secondary">Path to Deprecation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>dnr-prism</strong></td>
+                                <td>Ajith Jayamohan</td>
+                                <td><span class="badge secondary">Path to Deprecation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>seciamsvc</strong></td>
+                                <td>Claudia Santoro</td>
+                                <td><span class="badge secondary">Path to Deprecation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>certificateservices</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td><span class="badge secondary">Path to Deprecation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>pkicontroller</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td><span class="badge secondary">Path to Deprecation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>pkiinfra</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td><span class="badge secondary">Path to Deprecation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>safe-monitor</strong></td>
+                                <td>Fiaz Hossain</td>
+                                <td><span class="badge secondary">Path to Deprecation</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <div class="footer">
-            <p><strong>STP FKP & Mesh Adoption Dashboard - Commercial Metrics</strong></p>
-            <p>Data Source: FKP & Mesh Onboarding - Commercial Sheet</p>
-            <p>Filters: Manager = Herman Kwong, Excluding Gia2h</p>
-            <p style="margin-top: 5px; font-style: italic; opacity: 0.9;">Note: All metrics reflect Commercial cloud adoption status</p>
+            <p><strong>STP FKP & Mesh Adoption Dashboard - Multi-Environment</strong></p>
+            <p>Data Source: FKP & Mesh Onboarding - Commercial & Gia2h Sheets</p>
+            <p>Filters: Manager = Herman Kwong</p>
+            <p style="margin-top: 5px; font-style: italic; opacity: 0.9;">Commercial: All metrics reflect Commercial cloud adoption status</p>
+            <p style="font-style: italic; opacity: 0.9;">Gia2h: All metrics reflect Gia2h environment adoption status</p>
             <p style="margin-top: 10px;">
                 🔗 <a href="https://swaid-sys.github.io/stp-fkp-mesh-dashboard/">Live Dashboard</a> |
                 <a href="https://github.com/swaid-sys/stp-fkp-mesh-dashboard">GitHub Repo</a>
@@ -3365,11 +4231,27 @@
     </div>
 
     <script>
-        function switchTab(event, tab) {
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        function switchEnv(event, envId) {
+            // Update environment tab buttons
+            document.querySelectorAll('.env-tab-button').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(tab + '-tab').classList.add('active');
+            
+            // Update environment content
+            document.querySelectorAll('.env-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(envId + '-env').classList.add('active');
+        }
+
+        function switchTab(event, tabId) {
+            // Get the parent tabs container
+            const tabsContainer = event.target.closest('.tabs');
+            
+            // Update tab buttons within this container
+            tabsContainer.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update tab content within this container
+            tabsContainer.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId + '-tab').classList.add('active');
         }
     </script>
 </body>
