@@ -267,6 +267,244 @@
             </table>
         </div>
 
+
+        <!-- Can Not / Should Not Containerize Section -->
+        <div class="org-metrics" style="background: #fff3cd; border-left: 5px solid #ffc107;">
+            <h2 style="color: #856404;">⚪ Services That Can Not / Should Not Containerize</h2>
+            <p style="color: #856404; margin-bottom: 20px;">
+                These 36 services are not suitable for containerization due to technical limitations, 
+                business reasons, or architectural constraints.
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Service Name</th>
+                        <th>STP Leader</th>
+                        <th>Mesh Status</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>afiniti</strong></td>
+                        <td>Claudia Santoro</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Demo/Test Service (Low value to containerize)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>bastion</strong></td>
+                        <td>Claudia Santoro</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Technical limitations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>bghostaccess</strong></td>
+                        <td>Garren Bellew</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Only running in 1P</td>
+                    </tr>
+                    <tr>
+                        <td><strong>blackhawk</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>breakglass</strong></td>
+                        <td>Claudia Santoro</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>cag-hydrator</strong></td>
+                        <td>Claudia Santoro</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>TF script. Already running in containers. Executed by Spinnaker pipeline.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>cloudatlas-dynamo-datastore</strong></td>
+                        <td>Ramya Subramani</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>TF Only service. No compute resources associated.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>cloudcps-bootstrap</strong></td>
+                        <td>Fiaz Hossain</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>TF script. Already running in containers. Executed by Spinnaker pipeline.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>cloudhsm</strong></td>
+                        <td>Fiaz Hossain</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>csn-dataplane</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>No Business Reason</td>
+                    </tr>
+                    <tr>
+                        <td><strong>dnr-airflow</strong></td>
+                        <td>Ajith Jayamohan</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Technical Limitations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>dnrdp-orch</strong></td>
+                        <td>Ajith Jayamohan</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>e2ev</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Demo/Test Service (Low value to containerize)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>havc</strong></td>
+                        <td>Fiaz Hossain</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>No Business Reason</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ipreputation</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>iris</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>janus</strong></td>
+                        <td>Garren Bellew</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Only running in 1P</td>
+                    </tr>
+                    <tr>
+                        <td><strong>kms</strong></td>
+                        <td>Fiaz Hossain</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>kms-fd-unified-services</strong></td>
+                        <td>Fiaz Hossain</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>AWS Resource for Another Service</td>
+                    </tr>
+                    <tr>
+                        <td><strong>matlockauthval</strong></td>
+                        <td>Claudia Santoro</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Only running in 1P</td>
+                    </tr>
+                    <tr>
+                        <td><strong>metadata-db</strong></td>
+                        <td>Ajith Jayamohan</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Demo/Test Service (Low value to containerize)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>mtaproxy-lambda-service</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>network-access-controller</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>FKP Integration (Deployment / Stateful Set)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>perimetercdn-persistence</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>portuno</strong></td>
+                        <td>Garren Bellew</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Only running in 1P</td>
+                    </tr>
+                    <tr>
+                        <td><strong>pravm</strong></td>
+                        <td>Claudia Santoro</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Technical limitations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>private-linker-lambda</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>private-linker-watchdog</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>TF script. Already running in containers. Executed by Spinnaker pipeline.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>privateconnect-controlplane</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Managed AWS service (e.g., Lambda, AWS KMS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>privateconnect-data-plane</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>TF script. Already running in containers. Executed by Spinnaker pipeline.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>privateconnect-inbound-dp</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge danger">FALSE</span></td>
+                        <td>Technical limitations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>raven</strong></td>
+                        <td>Garren Bellew</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>Technical limitations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>sitebridge</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge danger">FALSE</span></td>
+                        <td>Technical limitations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>smsekm-skb</strong></td>
+                        <td>Fiaz Hossain</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>TF script. Already running in containers. Executed by Spinnaker pipeline.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>soter</strong></td>
+                        <td>Satish Raghunath</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>TF script. Already running in containers. Executed by Spinnaker pipeline.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>tip-usdl-janus-infra</strong></td>
+                        <td>Ajith Jayamohan</td>
+                        <td><span class="badge secondary">N/A</span></td>
+                        <td>AWS Resource for Another Service</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <div class="tabs">
             <div class="tab-buttons">
                 <button class="tab-button active" onclick="switchTab(event, 'fkp')">🟢 FKP Adoption by Status</button>
