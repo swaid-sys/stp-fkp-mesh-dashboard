@@ -198,9 +198,103 @@
             table { font-size: 0.9em; }
             th, td { padding: 10px; }
         }
-    </style>
+    
+        /* Edit mode styling */
+        .edit-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .edit-mode-indicator {
+            display: none;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .edit-mode-indicator.active {
+            display: block;
+        }
+
+        .auth-form input[type="password"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        .auth-form button {
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .auth-form button:hover {
+            opacity: 0.9;
+        }
+
+        /* Read-only mode - hide edit controls */
+        body:not(.edit-mode) .eta-dropdown,
+        body:not(.edit-mode) .notes-input,
+        body:not(.edit-mode) .status-dropdown {
+            display: none;
+        }
+
+        body:not(.edit-mode) .eta-display,
+        body:not(.edit-mode) .notes-display,
+        body:not(.edit-mode) .status-display {
+            display: block;
+        }
+
+        /* Edit mode - show edit controls */
+        body.edit-mode .eta-dropdown,
+        body.edit-mode .notes-input,
+        body.edit-mode .status-dropdown {
+            display: block;
+        }
+
+        body.edit-mode .eta-display,
+        body.edit-mode .notes-display,
+        body.edit-mode .status-display {
+            display: none;
+        }
+
+        .eta-display, .notes-display {
+            display: block;
+            padding: 5px;
+            color: #666;
+            font-style: italic;
+        }
+
+</style>
 </head>
 <body>
+
+    <!-- Edit Mode Controls -->
+    <div class="edit-controls">
+        <div class="edit-mode-indicator" id="editModeIndicator">
+            🔓 Edit Mode Active
+        </div>
+        <div class="auth-form" id="authForm">
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <button onclick="attemptUnlock()">Unlock</button>
+        </div>
+        <button onclick="lockDashboard()" id="lockButton" style="display: none;">🔒 Lock</button>
+    </div>
+
     <div class="container">
         <div class="header">
             <h1>📊 STP FKP & Mesh Adoption Dashboard</h1>
@@ -5266,6 +5360,171 @@
             document.querySelectorAll('.eta-dropdown').forEach(select => {
                 select.addEventListener('change', saveETAAndNotes);
             });
+
+
+        // Authentication System
+        const PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'; // SHA-256 hash of password
+
+        function hashPassword(password) {
+            return crypto.subtle.digest('SHA-256', new TextEncoder().encode(password))
+                .then(buf => Array.from(new Uint8Array(buf))
+                    .map(b => b.toString(16).padStart(2, '0')).join(''));
+        }
+
+        async function attemptUnlock() {
+            const password = document.getElementById('passwordInput').value;
+            const hash = await hashPassword(password);
+
+            if (hash === PASSWORD_HASH) {
+                enableEditMode();
+                document.getElementById('passwordInput').value = '';
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        function enableEditMode() {
+            document.body.classList.add('edit-mode');
+            document.getElementById('editModeIndicator').classList.add('active');
+            document.getElementById('authForm').style.display = 'none';
+            document.getElementById('lockButton').style.display = 'block';
+            sessionStorage.setItem('editMode', 'true');
+        }
+
+        function lockDashboard() {
+            document.body.classList.remove('edit-mode');
+            document.getElementById('editModeIndicator').classList.remove('active');
+            document.getElementById('authForm').style.display = 'block';
+            document.getElementById('lockButton').style.display = 'none';
+            sessionStorage.removeItem('editMode');
+            saveETAAndNotes(); // Save before locking
+        }
+
+        // Check if edit mode was active in this session
+        window.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('editMode') === 'true') {
+                enableEditMode();
+            }
+
+            // Allow Enter key to unlock
+            document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') attemptUnlock();
+            });
+        });
+
+        // Auto-updating Metrics System
+        function updateMetrics(environment) {
+            const envId = environment.toLowerCase();
+            const envSection = document.getElementById(`${envId}-env`);
+            if (!envSection) return;
+
+            // Count FKP completions
+            const fkpTable = envSection.querySelector('table');
+            let fkpCompleted = 0;
+            let totalFKP = 0;
+
+            if (fkpTable) {
+                const rows = fkpTable.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const statusBadge = row.querySelector('.badge');
+                    if (statusBadge) {
+                        totalFKP++;
+                        if (statusBadge.textContent.includes('Completed')) {
+                            fkpCompleted++;
+                        }
+                    }
+                });
+            }
+
+            // Count Mesh adoptions (from Mesh table)
+            const meshTables = envSection.querySelectorAll('table');
+            let meshAdopted = 0;
+            let meshEligible = 0;
+
+            meshTables.forEach(table => {
+                const header = table.querySelector('th');
+                if (header && header.textContent.includes('Mesh')) {
+                    const rows = table.querySelectorAll('tbody tr');
+                    rows.forEach(row => {
+                        const eng360Badge = row.querySelector('.badge');
+                        if (eng360Badge) {
+                            const badgeText = eng360Badge.textContent.trim();
+                            if (badgeText === 'TRUE' || badgeText === 'FALSE') {
+                                meshEligible++;
+                                if (badgeText === 'TRUE') {
+                                    meshAdopted++;
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Update metric cards
+            const metrics = envSection.querySelector('.org-metrics');
+            if (metrics) {
+                // Update FKP Adopted
+                const fkpCard = Array.from(metrics.querySelectorAll('.metric-card'))
+                    .find(card => card.textContent.includes('FKP Adopted'));
+                if (fkpCard) {
+                    const valueEl = fkpCard.querySelector('.value');
+                    if (valueEl) valueEl.textContent = fkpCompleted;
+                }
+
+                // Update Mesh Adopted count
+                const meshCard = Array.from(metrics.querySelectorAll('.metric-card'))
+                    .find(card => card.textContent.includes('Mesh Adopted') && !card.textContent.includes('%'));
+                if (meshCard) {
+                    const valueEl = meshCard.querySelector('.value');
+                    if (valueEl) valueEl.textContent = meshAdopted;
+                }
+
+                // Update Mesh percentage
+                if (meshEligible > 0) {
+                    const meshPct = Math.round(meshAdopted / meshEligible * 1000) / 10;
+                    const meshPctCard = Array.from(metrics.querySelectorAll('.metric-card'))
+                        .find(card => card.textContent.includes('% Services Mesh Adopted'));
+                    if (meshPctCard) {
+                        const valueEl = meshPctCard.querySelector('.value');
+                        if (valueEl) valueEl.textContent = meshPct + '%';
+
+                        // Update eligible text
+                        const detailEl = meshPctCard.querySelector('div[style*="font-size: 0.75em"]');
+                        if (detailEl) {
+                            detailEl.textContent = `${meshAdopted} of ${meshEligible} eligible services`;
+                        }
+                    }
+                }
+            }
+
+            console.log(`${environment} metrics updated: FKP=${fkpCompleted}, Mesh=${meshAdopted}/${meshEligible} (${Math.round(meshAdopted/meshEligible*100)}%)`);
+        }
+
+        // Listen for status changes
+        window.addEventListener('DOMContentLoaded', () => {
+            // Update metrics when any badge or dropdown changes
+            document.body.addEventListener('change', (e) => {
+                if (e.target.classList.contains('status-dropdown') ||
+                    e.target.classList.contains('eta-dropdown')) {
+
+                    // Determine which environment to update
+                    const row = e.target.closest('tr');
+                    const table = row?.closest('table');
+                    const envSection = table?.closest('[id$="-env"]');
+
+                    if (envSection) {
+                        const envId = envSection.id.replace('-env', '');
+                        const envName = envId.charAt(0).toUpperCase() + envId.slice(1);
+                        updateMetrics(envName);
+                    }
+                }
+            });
+
+            // Initial metrics update
+            updateMetrics('Commercial');
+            updateMetrics('Gia2h');
+        });
+
 
             document.querySelectorAll('.notes-input').forEach(input => {
                 input.addEventListener('blur', saveETAAndNotes);
