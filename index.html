@@ -290,9 +290,9 @@
         </div>
         <div class="auth-form" id="authForm">
             <input type="password" id="passwordInput" placeholder="Enter password">
-            <button onclick="attemptUnlock()">Unlock</button>
+            <button id="unlockButton">Unlock</button>
         </div>
-        <button onclick="lockDashboard()" id="lockButton" style="display: none;">🔒 Lock</button>
+        <button id="lockButton" style="display: none;">🔒 Lock</button>
     </div>
 
     <div class="container">
@@ -5405,6 +5405,10 @@
             if (sessionStorage.getItem('editMode') === 'true') {
                 enableEditMode();
             }
+
+            // Add event listeners to buttons
+            document.getElementById('unlockButton').addEventListener('click', attemptUnlock);
+            document.getElementById('lockButton').addEventListener('click', lockDashboard);
 
             // Allow Enter key to unlock
             document.getElementById('passwordInput').addEventListener('keypress', (e) => {
