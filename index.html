@@ -353,11 +353,11 @@
                     </div>
                     <div class="metric-card">
                         <div class="label">FKP Adopted</div>
-                        <div class="value">142</div>
+                        <div class="value">188</div>
                     </div>
                     <div class="metric-card">
                         <div class="label">Mesh Adopted</div>
-                        <div class="value">155</div>
+                        <div class="value">169</div>
                     </div>
                     <div class="metric-card">
                         <div class="label">Path to Deprecation</div>
@@ -372,13 +372,13 @@
                 <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 20px;">
                     <div class="metric-card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
                         <div class="label">% Services FKP Adopted</div>
-                        <div class="value">84.5%</div>
-                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">155 of 160 eligible services</div>
+                        <div class="value">96.9%</div>
+                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">188 of 194 eligible services</div>
                     </div>
                     <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                         <div class="label">% Services Mesh Adopted</div>
-                        <div class="value">96.9%</div>
-                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">169 of 194 eligible services</div>
+                        <div class="value">93.9%</div>
+                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">169 of 180 eligible services</div>
                     </div>
                 </div>
 
@@ -4289,11 +4289,11 @@
                     </div>
                     <div class="metric-card">
                         <div class="label">FKP Adopted</div>
-                        <div class="value">39</div>
+                        <div class="value">37</div>
                     </div>
                     <div class="metric-card">
                         <div class="label">Mesh Adopted</div>
-                        <div class="value">43</div>
+                        <div class="value">40</div>
                     </div>
                     <div class="metric-card">
                         <div class="label">Path to Deprecation</div>
@@ -4309,12 +4309,12 @@
                     <div class="metric-card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
                         <div class="label">% Services FKP Adopted</div>
                         <div class="value">77.1%</div>
-                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">43 of 44 eligible services</div>
+                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">37 of 48 eligible services</div>
                     </div>
                     <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                         <div class="label">% Services Mesh Adopted</div>
-                        <div class="value">97.7%</div>
-                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">40 of 48 eligible services</div>
+                        <div class="value">85.1%</div>
+                        <div style="font-size: 0.75em; opacity: 0.8; margin-top: 5px;">40 of 47 eligible services</div>
                     </div>
                 </div>
 
@@ -5543,16 +5543,18 @@
             if (!envSection) return;
 
             // Count FKP completions - use the FKP tab specifically
+            // FKP Adopted = services with status "Completed" or "Completed with Clean-Up Required"
+            // FKP Eligible = all rows in FKP tab (Path to Dep and Can't Containerize are excluded from this tab)
             const fkpTab = document.getElementById(`${envId}-fkp-tab`);
             let fkpCompleted = 0;
-            let totalFKP = 0;
+            let fkpEligible = 0;
 
             if (fkpTab) {
                 const rows = fkpTab.querySelectorAll('tbody tr');
                 rows.forEach(row => {
                     const statusBadge = row.querySelector('.badge');
                     if (statusBadge) {
-                        totalFKP++;
+                        fkpEligible++;
                         if (statusBadge.textContent.includes('Completed')) {
                             fkpCompleted++;
                         }
@@ -5561,6 +5563,8 @@
             }
 
             // Count Mesh adoptions - use the Mesh tab specifically
+            // Mesh Adopted = services with status "Completed" (second badge in each row)
+            // Mesh Eligible = all rows in Mesh tab MINUS rows with status starting "Will Not Move to Mesh"
             const meshTab = document.getElementById(`${envId}-mesh-tab`);
             let meshAdopted = 0;
             let meshEligible = 0;
@@ -5569,32 +5573,51 @@
                 const rows = meshTab.querySelectorAll('tbody tr');
                 rows.forEach(row => {
                     const badges = row.querySelectorAll('.badge');
-                    badges.forEach(badge => {
-                        const badgeText = badge.textContent.trim();
-                        if (badgeText === 'TRUE' || badgeText === 'FALSE') {
+                    // The second badge is the Mesh status badge
+                    const statusBadge = badges.length >= 2 ? badges[1] : badges[0];
+                    if (statusBadge) {
+                        const statusText = statusBadge.textContent.trim();
+                        if (!statusText.startsWith('Will Not Move to Mesh')) {
                             meshEligible++;
-                            if (badgeText === 'TRUE') {
+                            if (statusText === 'Completed' || statusText === 'Completed with Clean-Up Required') {
                                 meshAdopted++;
                             }
                         }
-                    });
+                    }
                 });
             }
 
             // Update metric cards
             const metrics = envSection.querySelector('.org-metrics');
             if (metrics) {
-                // Update FKP Adopted
+                // Update FKP Adopted count
                 const fkpCard = Array.from(metrics.querySelectorAll('.metric-card'))
-                    .find(card => card.textContent.includes('FKP Adopted'));
+                    .find(card => card.querySelector('.label') && card.querySelector('.label').textContent.trim() === 'FKP Adopted');
                 if (fkpCard) {
                     const valueEl = fkpCard.querySelector('.value');
                     if (valueEl) valueEl.textContent = fkpCompleted;
                 }
 
+                // Update FKP percentage card
+                if (fkpEligible > 0) {
+                    const fkpPct = Math.round(fkpCompleted / fkpEligible * 1000) / 10;
+                    const fkpPctCard = Array.from(metrics.querySelectorAll('.metric-card'))
+                        .find(card => card.textContent.includes('% Services FKP Adopted'));
+                    if (fkpPctCard) {
+                        const valueEl = fkpPctCard.querySelector('.value');
+                        if (valueEl) valueEl.textContent = fkpPct + '%';
+
+                        // Update eligible text
+                        const detailEl = fkpPctCard.querySelector('div[style*="font-size: 0.75em"]');
+                        if (detailEl) {
+                            detailEl.textContent = `${fkpCompleted} of ${fkpEligible} eligible services`;
+                        }
+                    }
+                }
+
                 // Update Mesh Adopted count
                 const meshCard = Array.from(metrics.querySelectorAll('.metric-card'))
-                    .find(card => card.textContent.includes('Mesh Adopted') && !card.textContent.includes('%'));
+                    .find(card => card.querySelector('.label') && card.querySelector('.label').textContent.trim() === 'Mesh Adopted');
                 if (meshCard) {
                     const valueEl = meshCard.querySelector('.value');
                     if (valueEl) valueEl.textContent = meshAdopted;
@@ -5618,7 +5641,7 @@
                 }
             }
 
-            console.log(`${environment} metrics updated: FKP=${fkpCompleted}, Mesh=${meshAdopted}/${meshEligible} (${Math.round(meshAdopted/meshEligible*100)}%)`);
+            console.log(`${environment} metrics updated: FKP=${fkpCompleted}/${fkpEligible} (${Math.round(fkpCompleted/fkpEligible*100)}%), Mesh=${meshAdopted}/${meshEligible} (${Math.round(meshAdopted/meshEligible*100)}%)`);
         }
 
         // Listen for status changes
