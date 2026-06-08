@@ -5360,7 +5360,11 @@
             document.querySelectorAll('.eta-dropdown').forEach(select => {
                 select.addEventListener('change', saveETAAndNotes);
             });
-
+            document.querySelectorAll('.notes-input').forEach(input => {
+                input.addEventListener('blur', saveETAAndNotes);
+                input.addEventListener('change', saveETAAndNotes);
+            });
+        });
 
         // Authentication System
         const PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'; // SHA-256 hash of password
@@ -5527,13 +5531,6 @@
             // Initial metrics update
             updateMetrics('Commercial');
             updateMetrics('Gia2h');
-        });
-
-
-            document.querySelectorAll('.notes-input').forEach(input => {
-                input.addEventListener('blur', saveETAAndNotes);
-                input.addEventListener('change', saveETAAndNotes);
-            });
         });
 
     </script>
