@@ -199,105 +199,17 @@
             th, td { padding: 10px; }
         }
     
-        /* Edit mode styling */
-        .edit-controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .edit-mode-indicator {
-            display: none;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .edit-mode-indicator.active {
-            display: block;
-        }
-
-        .auth-form input[type="password"] {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 200px;
-        }
-
-        .auth-form button {
-            padding: 8px 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 5px;
-        }
-
-        .auth-form button:hover {
-            opacity: 0.9;
-        }
-
-        /* Read-only mode - hide edit controls */
-        body:not(.edit-mode) .eta-dropdown,
-        body:not(.edit-mode) .status-dropdown {
-            display: none;
-        }
-
-        body:not(.edit-mode) .eta-display,
-        body:not(.edit-mode) .status-display {
-            display: block;
-        }
-
-        /* Edit mode - show edit controls */
-        body.edit-mode .eta-dropdown,
-        body.edit-mode .status-dropdown {
-            display: block;
-        }
-
-        body.edit-mode .eta-display,
-        body.edit-mode .status-display {
-            display: none;
-        }
-
-        .eta-display {
-            display: block;
-            padding: 5px;
-            color: #666;
-            font-style: italic;
-        }
-
 </style>
 </head>
 <body>
-
-    <!-- Edit Mode Controls -->
-    <div class="edit-controls">
-        <div class="edit-mode-indicator" id="editModeIndicator">
-            🔓 Edit Mode Active
-        </div>
-        <div class="auth-form" id="authForm">
-            <input type="password" id="passwordInput" placeholder="Enter password">
-            <button id="unlockButton">Unlock</button>
-        </div>
-        <button id="lockButton" style="display: none;">🔒 Lock</button>
-    </div>
 
     <div class="container">
         <div class="header">
             <h1>📊 STP FKP & Mesh Adoption Dashboard</h1>
             <div class="subtitle">Herman Kwong's Organization - Multi-Environment</div>
-            <div class="timestamp">Generated: June 30, 2026 (Updated with Google Sheets Reconciliation)</div>
+            <div class="timestamp">Generated: July 13, 2026 (Updated with Google Sheets Reconciliation)</div>
         </div>
-        
+
         <!-- Environment Level Tabs -->
         <div class="env-tabs">
             <div class="env-tab-buttons">
@@ -5058,61 +4970,6 @@
             document.querySelectorAll('.eta-dropdown').forEach(select => {
                 select.addEventListener('change', saveETAAndNotes);
             });
-
-
-        // Authentication System
-        const PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'; // SHA-256 hash of password
-
-        function hashPassword(password) {
-            return crypto.subtle.digest('SHA-256', new TextEncoder().encode(password))
-                .then(buf => Array.from(new Uint8Array(buf))
-                    .map(b => b.toString(16).padStart(2, '0')).join(''));
-        }
-
-        async function attemptUnlock() {
-            const password = document.getElementById('passwordInput').value;
-            const hash = await hashPassword(password);
-
-            if (hash === PASSWORD_HASH) {
-                enableEditMode();
-                document.getElementById('passwordInput').value = '';
-            } else {
-                alert('Incorrect password');
-            }
-        }
-
-        function enableEditMode() {
-            document.body.classList.add('edit-mode');
-            document.getElementById('editModeIndicator').classList.add('active');
-            document.getElementById('authForm').style.display = 'none';
-            document.getElementById('lockButton').style.display = 'block';
-            sessionStorage.setItem('editMode', 'true');
-        }
-
-        function lockDashboard() {
-            document.body.classList.remove('edit-mode');
-            document.getElementById('editModeIndicator').classList.remove('active');
-            document.getElementById('authForm').style.display = 'block';
-            document.getElementById('lockButton').style.display = 'none';
-            sessionStorage.removeItem('editMode');
-            saveETAAndNotes(); // Save before locking
-        }
-
-        // Check if edit mode was active in this session
-        window.addEventListener('DOMContentLoaded', () => {
-            if (sessionStorage.getItem('editMode') === 'true') {
-                enableEditMode();
-            }
-
-            // Add event listeners to buttons
-            document.getElementById('unlockButton').addEventListener('click', attemptUnlock);
-            document.getElementById('lockButton').addEventListener('click', lockDashboard);
-
-            // Allow Enter key to unlock
-            document.getElementById('passwordInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') attemptUnlock();
-            });
-        });
 
         // Auto-updating Metrics System
         function updateMetrics(environment) {
