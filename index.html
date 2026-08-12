@@ -413,7 +413,7 @@
                     <button class="tab-button" onclick="switchTab(event, 'commercial-path')">📅 Path to Deprecation</button>
                 </div>
                 <div id="commercial-fkp-tab" class="tab-content active">
-                    <h3 style="color: #667eea; margin-bottom: 15px;">FKP Adoption Status (208 services)</h3>
+                    <h3 style="color: #667eea; margin-bottom: 15px;">FKP Adoption Status (209 eligible services)</h3>
                     <p style="color: #666; margin-bottom: 20px;">Services actively tracked for FKP adoption (excludes Path to Deprecation and Can Not/Should Not Containerize).</p>
                     <table><thead><tr><th>STP Leader</th><th>Service Name</th><th>Eng360 Status</th><th>FKP Commercial Adoption Status</th><th>ETA</th></tr></thead><tbody>
                             <tr>
@@ -1872,10 +1872,17 @@
                                 <td><span class="badge success">Completed</span></td>
                                 <td>-</td>
                             </tr>
+                            <tr>
+                                <td>Ajith Jayamohan</td>
+                                <td><strong>containersec-console</strong></td>
+                                <td>100% (1 / 1)</td>
+                                <td><span class="badge info">Path to Deprecation</span></td>
+                                <td>FY27 Q3</td>
+                            </tr>
                     </tbody></table>
                 </div>
                 <div id="commercial-mesh-tab" class="tab-content">
-                    <h3 style="color: #667eea; margin-bottom: 15px;">Mesh Adoption Status (208 services)</h3>
+                    <h3 style="color: #667eea; margin-bottom: 15px;">Mesh Adoption Status (194 eligible services)</h3>
                     <p style="color: #666; margin-bottom: 20px;">Services actively tracked for Mesh adoption (excludes Path to Deprecation and Can Not/Should Not Containerize).</p>
                     <table><thead><tr><th>STP Leader</th><th>Service Name</th><th>Eng360 Status</th><th>Mesh Commercial Adoption Status</th><th>ETA</th></tr></thead><tbody>
                             <tr>
@@ -2139,13 +2146,6 @@
                             </tr>
                             <tr>
                                 <td>Fiaz Hossain</td>
-                                <td><strong>data-resilience</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Managed Service</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
                                 <td><strong>data-resilience-operations</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
@@ -2349,13 +2349,6 @@
                             </tr>
                             <tr>
                                 <td>Claudia Santoro</td>
-                                <td><strong>iamds-secds-router</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Technical Limitations</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Claudia Santoro</td>
                                 <td><strong>iamds-store</strong></td>
                                 <td><span class="badge secondary">N/A</span></td>
                                 <td><span class="badge success">Completed</span></td>
@@ -2387,13 +2380,6 @@
                                 <td><strong>idm-engine</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Claudia Santoro</td>
-                                <td><strong>idm-store</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Infra Only Service</span></td>
                                 <td>-</td>
                             </tr>
                             <tr>
@@ -2502,13 +2488,6 @@
                                 <td>-</td>
                             </tr>
                             <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>kmsinfra</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Not a Real Service</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
                                 <td>Wolfgang Krause</td>
                                 <td><strong>kodama</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
@@ -2591,20 +2570,6 @@
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
                                 <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>madkub-injection-webhook</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Mutating Webhook to Bring Up Service</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>madkub-watchdog</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Integration</span></td>
-                                <td>TBD</td>
                             </tr>
                             <tr>
                                 <td>Satish Raghunath</td>
@@ -2755,13 +2720,6 @@
                             </tr>
                             <tr>
                                 <td>Claudia Santoro</td>
-                                <td><strong>pcsk-secds-sync-job</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Does Not Serve Traffic</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Claudia Santoro</td>
                                 <td><strong>pcskam</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
@@ -2793,13 +2751,6 @@
                                 <td><strong>pl-api-dev</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
-                                <td><strong>policy-releaser</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Not a Real Service</span></td>
                                 <td>-</td>
                             </tr>
                             <tr>
@@ -2870,13 +2821,6 @@
                                 <td><strong>quark</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Wolfgang Krause</td>
-                                <td><strong>rabbitmq-external-sfmp</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Not a Real Service</span></td>
                                 <td>-</td>
                             </tr>
                             <tr>
@@ -3021,13 +2965,6 @@
                             </tr>
                             <tr>
                                 <td>Fiaz Hossain</td>
-                                <td><strong>smscps</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: 1P Service</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Fiaz Hossain</td>
                                 <td><strong>smszk</strong></td>
                                 <td><span class="badge secondary">N/A</span></td>
                                 <td><span class="badge success">Completed</span></td>
@@ -3080,13 +3017,6 @@
                                 <td><strong>tesoro</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Claudia Santoro</td>
-                                <td><strong>test-iam-prod-onboarding</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Team Does Not Find Value</span></td>
                                 <td>-</td>
                             </tr>
                             <tr>
@@ -3251,20 +3181,6 @@
                                 <td>-</td>
                             </tr>
                             <tr>
-                                <td>Fiaz Hossain</td>
-                                <td><strong>vaultwebhook</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Mutating Webhook to Bring Up Service</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
-                                <td><strong>waas-control-plane</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Not a Real Service</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
                                 <td>Satish Raghunath</td>
                                 <td><strong>waas-controller</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
@@ -3318,13 +3234,6 @@
                                 <td><strong>waas-redis</strong></td>
                                 <td><span class="badge success">TRUE</span></td>
                                 <td><span class="badge success">Completed</span></td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Satish Raghunath</td>
-                                <td><strong>waas-validation-controller</strong></td>
-                                <td><span class="badge secondary">N/A</span></td>
-                                <td><span class="badge cant-containerize">Will Not Move to Mesh: Mutating Webhook to Bring Up Service</span></td>
                                 <td>-</td>
                             </tr>
                             <tr>
